@@ -4,7 +4,7 @@ import Gem.*;
 public class Shape {
     private int position;
 	public static final int MAX_POINTS = 60;
-	private ArrayList<Gem> square = new ArrayList<Gem>();
+	private ArrayList<Gem> shape = new ArrayList<Gem>();
 	
 	public Shape(int position) {
 		this.position = position;
@@ -19,18 +19,18 @@ public class Shape {
 
 	public int getPoint() {
 		int sum = 0;
-		for (Gem gem:square) {
+		for (Gem gem:shape) {
 			sum += gem.getPoint();
 		}
 		return sum;
 	}
 	
 	public void addGem(Gem gem) {
-		square.add(gem);
+		shape.add(gem);
 	}
 	public void removeGem() {
-		while (square.size() !=0) {
-			square.remove(0);
+		while (shape.size() !=0) {
+			shape.remove(0);
 		}
 	}
 }
