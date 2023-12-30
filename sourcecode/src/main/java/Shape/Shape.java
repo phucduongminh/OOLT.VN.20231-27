@@ -1,7 +1,7 @@
 package Shape;
 import java.util.*;
 import Gem.*;
-public class Shape {
+public abstract class Shape {
     private int position;
 	public static final int MAX_POINTS = 60;
 	private ArrayList<Gem> shape = new ArrayList<Gem>();
@@ -24,6 +24,7 @@ public class Shape {
 		}
 		return sum;
 	}
+        
 	
 	public void addGem(Gem gem) {
 		shape.add(gem);
@@ -33,4 +34,8 @@ public class Shape {
 			shape.remove(0);
 		}
 	}
+    @Override
+        public abstract String toString();
+        
 }
+
