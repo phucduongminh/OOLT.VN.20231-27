@@ -9,13 +9,17 @@ public class Board {
     //Công việc
     //Viết code phải kèm theo chú thích
     //Yêu cầu với method print
+    
 
-    //Danh sach chua cac hinh trong bang tro choi
+    //Mang kich thuoc 12 chua cac hinh trong bang tro choi
     private Shape[] board = new Shape[12];
+    
     
     
     //khoi tao bang va cac hinh trong bang
     public Board() {
+    
+       
         //khoi tao 2 hinh ban nguyet(o quan) nam o vi tri 0 va 6 trong mang
       board[0] = new Semicircle(0);
       board[6] = new Semicircle(6);
@@ -26,7 +30,9 @@ public class Board {
           if(i == 6) continue;
           board[i] = new Square(i);
       }
-
+      
+    
+    
       
       
       //them quan quan(big gem) vao o quan(Semicircle)
@@ -43,6 +49,14 @@ public class Board {
               board[j].addGem(smallGem);
           } 
       }
+    }
+    
+    //lay vi tri cua hinh trong bang
+    public int getShape(int position){
+        while(position < 0){
+            position += 12;
+        }
+        return position % 12;
     }
     
     
