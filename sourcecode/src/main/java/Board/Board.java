@@ -51,21 +51,24 @@ public class Board {
       }
     }
     
-    //lay vi tri cua hinh trong bang
-    public int getShape(int position){
-        while(position < 0){
-            position += 12;
-        }
-        return position % 12;
-    }
+    //lay hinh trong bang theo vi tri
+    public Shape getShape(int position) {
+		while (position < 0) {
+			position += 12;
+		}
+		while (position >= 12) {
+			position -= 12;
+		}
+		return board[position];
+	}
     
     
     
     //in thong tin cua moi hinh trong bang
     //thong tin bao gom "ten hinh", "diem"
     public void print() {
-		//Phải in được tên của Shape v�  số điểm trong Shape đó
-        //VD: Nếu shape đang l�  Semicircle, yêu cầu in ra
+		//Phải in được tên của Shape v�  số điểm trong Shape đó
+        //VD: Nếu shape đang l�  Semicircle, yêu cầu in ra
         // Semicircle : 5 point
         System.out.println("=====================");
         for(Shape shape : board){
