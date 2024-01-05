@@ -10,6 +10,7 @@ import Player.Player2;
 public class Console {
 	static Player playingPlayer;
 	static Board board;
+	static Scanner keyboard = new Scanner(System.in);
 
 	public static void aTurn(Board board, Player playingPlayer) { // thực hiện lượt chơi bao gồm: chọn ô, chọn hướng, chơi
 		if (playingPlayer instanceof Player1) {
@@ -19,7 +20,6 @@ public class Console {
 	   }
 	  
 		// Choose square
-	   Scanner keyboard = new Scanner(System.in);
 	   System.out.println("Please choose a square in " + playingPlayer.getRange());
 	   int chosenSquare = keyboard.nextInt();
 	   while (playingPlayer.getRange().contains(chosenSquare) == false || board.getShape(chosenSquare).getPoint() == 0) {
@@ -43,7 +43,7 @@ public class Console {
 	   
 	   board.turn( playingPlayer, chosenSquare, chosenDirection);
 	   board.print();
-	   keyboard.close();
+	   
    }
 
 	public static boolean stopTurn(Board board,Player playingPlayer, int curPosition , int direction) { // done
@@ -144,6 +144,7 @@ public class Console {
 			
 		}
 		
+		keyboard.close();
 		gameResult(player1, player2);
 		
 	}
