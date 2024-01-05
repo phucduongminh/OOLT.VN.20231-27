@@ -3,9 +3,8 @@ import java.util.Scanner;
 
 import Board.Board;
 import Gem.*;
-import Player.Player;
-import Player.Player1;
-import Player.Player2;
+import Player.*;
+;
 
 public class Console {
 	static Player playingPlayer;
@@ -118,33 +117,57 @@ public class Console {
 	}
 
 	public static void main(String[] args) {
+		int choice;
+		Scanner sc = new Scanner(System.in);
 		Player1 player1 = new Player1();
 		Player2 player2 = new Player2();
+		BotPlayer aiPlayer = new BotPlayer("AI Player", 3);
 		Board board = new Board(player1,player2);
+		
+		while(true){
+			System.out.println("1. Player vs Player");
+			System.out.println("2. Player vs AI");
+			System.out.println("3. Exit");
+			System.out.println("Enter your choice: ");
+			choice = sc.nextInt();
+			if (choice == 1) {
+				
+				break;
+			}
+				
+			if (choice == 2) {
+				board = new Board(player1,aiPlayer);
+				break;
+			}
+			if (choice == 3) break;
+		}
+		
+	
 
 		playingPlayer = player1;
 		board.print();
 	
 		// Start game
 		while (stopGame(board) == false) {
-			if (checkNeedRefill(board, playingPlayer)) {
+			
+			if (checkNeedRefill(board, playingPlayer) == true) {
 				System.out.println("begin");
 				board.print();
 				System.out.println("end");
 				refillGems(board, playingPlayer);
 				
 			}
+			if (board.getPlayer1() == null) System.out.println("null");
 			aTurn(board, playingPlayer);
 			
 			board.print();
-			System.out.println("Player " + player1.getName() + " has " + player1.getTotalPoint() + " gems");
-			System.out.println("Player " + player2.getName() + " has " + player2.getTotalPoint() + " gems");
+			System.out.println("Player " + board.getPlayer1().getName() + " has " + player1.getTotalPoint() + " gems");
+			System.out.println("Player " + board.getPlayer2().getName() + " has " + aiPlayer.getTotalPoint() + " gems");
 			System.out.println("=======================================================");
-			takeTurn(player1, player2);
+			takeTurn(board.getPlayer1(),board.getPlayer2());
 			
 		}
 		
-		keyboard.close();
 		gameResult(player1, player2);
 		
 	}

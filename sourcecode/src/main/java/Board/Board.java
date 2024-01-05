@@ -101,6 +101,48 @@ public class Board {
     }
   }
 
+  public Player1 getPlayer1(){
+		return  this.player1;
+	}
+	public Player2 getPlayer2(){
+		return  this.player2;
+	}	
+	public int getPointPlayer1(){
+		return this.player1.getTotalPoint();
+	}
+	public int getPointPlayer2(){
+		return this.player2.getTotalPoint();
+	
+	}
+	
+	public void copyBoard(Board source){
+		if (source == null) {
+			throw new IllegalArgumentException("Source board cannot be null");
+		}
+		if (this.board != null) {
+			
+			if (source.board != null) {
+				for(int i = 0; i < 12; i++){
+					
+					Shape copy = source.board[i].copy();
+					board[i] = copy;
+					
+				}
+			}
+		}
+		
+		if (this.player1 != null && source.getPlayer1() != null) {
+			this.player1.copyPlayer(source.getPlayer1());
+		} else {
+			throw new RuntimeException("Player1 is null");
+		}
+		if (this.player2 != null && source.getPlayer2() != null) {
+			this.player2.copyPlayer(source.getPlayer2());
+		} else {
+			throw new RuntimeException("Player2 is null");
+		}
+	}
+
   //position is 0-11, but except 0 and 6 is SemiCircle
 	//direction is -1 for anticlockwise, 1 is for folling clockwise
 	public static void pickAndDrop(Board board,Player playingPlayer, int position, int direction) {
