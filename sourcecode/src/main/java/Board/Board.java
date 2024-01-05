@@ -2,14 +2,16 @@ package Board;
 
 import Gem.BigGem;
 import Gem.SmallGem;
+import Player.Player;
+import Player.Player1;
+import Player.Player2;
 import Shape.Semicircle;
 import Shape.Square;
 import Shape.Shape;
 
 public class Board {
-  // Công việc
-  // Viết code phải kèm theo chú thích
-  // Yêu cầu với method print
+  private Player1 player1;
+	private Player2 player2 ;
 
   // Mang kich thuoc 12 chua cac hinh trong bang tro choi
   private Shape[] board = new Shape[12];
@@ -67,4 +69,53 @@ public class Board {
       System.out.println("" + shape + " " + shape.getPosition() + ": " + shape.getPoint() + " point(s)" + "\n");
     }
   }
+
+  //position is 0-11, but except 0 and 6 is SemiCircle
+	//direction is -1 for anticlockwise, 1 is for folling clockwise
+	public static void pickAndDrop(Board board,Player playingPlayer, int position, int direction) {
+		SmallGem gem = new SmallGem();
+		playingPlayer.setPointInHand(board.getShape(position).getPoint());
+		board.getShape(position).removeGem();
+		int curPosition = position;
+		while (playingPlayer.getPointInHand() > 0) {
+			curPosition += direction;
+			board.getShape(curPosition).addGem(gem);
+			playingPlayer.setPointInHand(playingPlayer.getPointInHand() - 1);
+		}
+	}
+
+  public void turn(Player playingPlayer, int position, int direction) {
+		while(true) {
+			if(this.getShape(position).getPoint() > 0) {
+				int curPosition = position;
+				int phasePoint = this.getShape(position).getPoint();	
+				pickAndDrop(this, playingPlayer, position, direction);
+				curPosition = position + direction*phasePoint;
+				while(true) {
+					if(this.getShape(curPosition + direction).getPoint() != 0 && !this.getShape(curPosition + direction).toString().equals("Semicircle")) {
+						System.out.println();
+						int nextPosition = curPosition + direction;
+						phasePoint = this.getShape(nextPosition).getPoint();
+						pickAndDrop(this, playingPlayer, nextPosition, direction);
+						curPosition = nextPosition + direction*phasePoint;
+					}
+					else if (this.getShape(curPosition + direction).getPoint() == 0 && this.getShape(curPosition + 2*direction).getPoint() != 0 ) {
+						System.out.println("Player " + playingPlayer.getName() + " won " + this.getShape(curPosition + 2*direction).getPoint() + " gems");
+						playingPlayer.plusPoint(this.getShape(curPosition + 2*direction).getPoint());
+						this.getShape(curPosition + 2*direction).removeGem();
+						break;
+					}
+					else if(this.getShape(curPosition + direction).toString().equals("Semicircle")) {
+						System.out.println("Stop because the next square is the half circle");
+						break;
+					}
+				}
+				break;
+			}
+			else {
+				System.out.println("The chosen square does not have any gems to disperse");
+				break;
+			}
+		}
+	}
 }
