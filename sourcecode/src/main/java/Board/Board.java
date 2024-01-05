@@ -16,8 +16,39 @@ public class Board {
   // Mang kich thuoc 12 chua cac hinh trong bang tro choi
   private Shape[] board = new Shape[12];
 
-  // khoi tao bang va cac hinh trong bang
   public Board() {
+    //Khoi tao mac dinh cho Play with Bot
+    //Khoi tao Board(player1,player2) la cho 2 player 
+
+    //player1 = new Player1();
+    //playerAI = new AIplayer();
+    board[0] = new Semicircle(0);
+    board[6] = new Semicircle(6);
+
+    for (int i = 1; i <= 11; i++) {
+      if (i == 6)
+        continue;
+      board[i] = new Square(i);
+    }
+
+    BigGem bigGem = new BigGem();
+    board[0].addGem(bigGem);
+    board[6].addGem(bigGem);
+
+    SmallGem smallGem = new SmallGem();
+    for (int i = 1; i <= 5; i++) {
+      for (int j = 1; j <= 11; j++) {
+        if (j == 6)
+          continue;
+        board[j].addGem(smallGem);
+      }
+    }
+  }
+
+  // khoi tao bang va cac hinh trong bang
+  public Board(Player1 player1, Player2 player2) {
+		this.player1 = player1;
+		this.player2 = player2;
 
     // khoi tao 2 hinh ban nguyet(o quan) nam o vi tri 0 va 6 trong mang
     board[0] = new Semicircle(0);
@@ -84,31 +115,67 @@ public class Board {
 		}
 	}
 
-  public void turn(Player playingPlayer, int position, int direction) {
+  public void turn(Player playingPlayer, int position, int direction) { // thực hiện một lượt chơi khi đã có hướng và ô
+		int type =0;
+		if (playingPlayer instanceof Player1) {
+      //??co bo buoc nay duoc ko?
+			playingPlayer = (Player1) playingPlayer;
+
+		} else if (playingPlayer instanceof Player2) {
+			playingPlayer = (Player2) playingPlayer;
+			type =1;
+		} else {
+			type = 2;
+		}
+		
 		while(true) {
 			if(this.getShape(position).getPoint() > 0) {
 				int curPosition = position;
-				int phasePoint = this.getShape(position).getPoint();	
+				int phasePoint = this.getShape(position).getPoint();	 // number of gems in chosen square
 				pickAndDrop(this, playingPlayer, position, direction);
 				curPosition = position + direction*phasePoint;
 				while(true) {
 					if(this.getShape(curPosition + direction).getPoint() != 0 && !this.getShape(curPosition + direction).toString().equals("Semicircle")) {
+						// Next square != halfcircle && point != 0 => continue
 						System.out.println();
 						int nextPosition = curPosition + direction;
 						phasePoint = this.getShape(nextPosition).getPoint();
 						pickAndDrop(this, playingPlayer, nextPosition, direction);
 						curPosition = nextPosition + direction*phasePoint;
 					}
-					else if (this.getShape(curPosition + direction).getPoint() == 0 && this.getShape(curPosition + 2*direction).getPoint() != 0 ) {
-						System.out.println("Player " + playingPlayer.getName() + " won " + this.getShape(curPosition + 2*direction).getPoint() + " gems");
-						playingPlayer.plusPoint(this.getShape(curPosition + 2*direction).getPoint());
-						this.getShape(curPosition + 2*direction).removeGem();
-						break;
-					}
+					
 					else if(this.getShape(curPosition + direction).toString().equals("Semicircle")) {
+						// next square is a halfcircle and point != 0 => stop turn
+						
 						System.out.println("Stop because the next square is the half circle");
 						break;
 					}
+					
+					
+					else if (this.getShape(curPosition + direction).getPoint() == 0 && this.getShape(curPosition + 2*direction).getPoint() != 0 ) {
+						// next square has 0 gems
+						while (this.getShape(curPosition + direction).getPoint() == 0 && this.getShape(curPosition + 2*direction).getPoint() != 0 && !this.getShape(curPosition + direction).toString().equals("Semicircle")) {
+							if (type ==1){
+							System.out.println("Player " + playingPlayer.getName() + " take " + this.getShape(curPosition + 2*direction).getPoint() + " gems");
+							}
+							if(type==0){
+								this.player1.plusPoint(this.getShape(curPosition + 2*direction).getPoint());
+							}else{
+								this.player2.plusPoint(this.getShape(curPosition + 2*direction).getPoint());
+							}
+							
+							
+							this.getShape(curPosition + 2*direction).removeGem();
+							curPosition += 2*direction;
+						}
+						
+						break;
+					}
+					else {
+						System.out.println("You get 0 gem!");
+						break;
+					}
+					
 				}
 				break;
 			}

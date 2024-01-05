@@ -1,9 +1,8 @@
 package Console;
-import java.util.List;
+import java.util.Scanner;
 
 import Board.Board;
 import Gem.*;
-import Shape.*;
 import Player.Player;
 import Player.Player1;
 import Player.Player2;
@@ -11,6 +10,41 @@ import Player.Player2;
 public class Console {
 	static Player playingPlayer;
 	static Board board;
+
+	public static void aTurn(Board board, Player playingPlayer) { // thực hiện lượt chơi bao gồm: chọn ô, chọn hướng, chơi
+		if (playingPlayer instanceof Player1) {
+		   playingPlayer = (Player1) playingPlayer;
+	   } else if (playingPlayer instanceof Player2) {
+		   playingPlayer = (Player2) playingPlayer;
+	   }
+	  
+		// Choose square
+	   Scanner keyboard = new Scanner(System.in);
+	   System.out.println("Please choose a square in " + playingPlayer.getRange());
+	   int chosenSquare = keyboard.nextInt();
+	   while (playingPlayer.getRange().contains(chosenSquare) == false || board.getShape(chosenSquare).getPoint() == 0) {
+		   System.out.println("You cannot choose this square!");
+		   System.out.println("Please choose another square in " + playingPlayer.getRange());
+		   chosenSquare = keyboard.nextInt();
+	   }
+	   
+	   // choose direction
+	   System.out.println("Please choose direction:");
+	   System.out.println("1: counter clockwise");
+	   System.out.println("-1: clockwise");
+	   int chosenDirection = keyboard.nextInt();
+	   while (chosenDirection != 1 && chosenDirection != -1) {
+		   System.out.println("This number is not available!");
+		   System.out.println("Please choose direction:");
+		   System.out.println("1: counter clockwise");
+		   System.out.println("-1: clockwise");
+		   chosenDirection = keyboard.nextInt();
+	   }
+	   
+	   board.turn( playingPlayer, chosenSquare, chosenDirection);
+	   board.print();
+	   keyboard.close();
+   }
 
 	public static boolean stopTurn(Board board,Player playingPlayer, int curPosition , int direction) { // done
 		int nextPosition = curPosition + direction;
@@ -33,7 +67,7 @@ public class Console {
 		} else if (playingPlayer == (player2)) {
 			playingPlayer = player1;
 		}
-		System.out.println("Player " + playingPlayer.getName() + " start turn");
+		System.out.println(playingPlayer.getName() + " start turn");
 	}
 
 	public static void gameResult(Player1 player1, Player2 player2) {
@@ -67,24 +101,50 @@ public class Console {
 		return true;
 	}
 
-	public static void main(String[] args) {
-		Board board = new Board();
-		Player1 player = new Player1();
+	public static void refillGems(Board board, Player playingPlayer) {
+		SmallGem gem = new SmallGem();
+		// downcast class
+		if (playingPlayer instanceof Player1) {
+			playingPlayer = (Player1) playingPlayer;
+		} else if (playingPlayer instanceof Player2) {
+			playingPlayer = (Player2) playingPlayer;
+		}
+		
+		// if all squares which playing player can choose are empty ==> refill 1 gem to all squares
+		for (int i:playingPlayer.getRange()) {
+			board.getShape(i).addGem(gem);
+		}
+		playingPlayer.minusPoint(5);
+	}
 
-		board.turn(player, 4, -1);
+	public static void main(String[] args) {
+		Player1 player1 = new Player1();
+		Player2 player2 = new Player2();
+		Board board = new Board(player1,player2);
+
+		playingPlayer = player1;
 		board.print();
-		board.turn(player, 8, -1);
-		board.print();
-		board.turn(player, 2, 1);
-		board.print();
-		board.turn(player, 7, 1);
-		board.print();
-		board.turn(player, 2, -1);
-		board.print();
-		board.turn(player, 11, -1);
-		board.print();
-		board.turn(player, 5, 1);
-		board.print();
-		System.out.println(player.getTotalPoint());
+	
+		// Start game
+		while (stopGame(board) == false) {
+			if (checkNeedRefill(board, playingPlayer)) {
+				System.out.println("begin");
+				board.print();
+				System.out.println("end");
+				refillGems(board, playingPlayer);
+				
+			}
+			aTurn(board, playingPlayer);
+			
+			board.print();
+			System.out.println("Player " + player1.getName() + " has " + player1.getTotalPoint() + " gems");
+			System.out.println("Player " + player2.getName() + " has " + player2.getTotalPoint() + " gems");
+			System.out.println("=======================================================");
+			takeTurn(player1, player2);
+			
+		}
+		
+		gameResult(player1, player2);
+		
 	}
 }
