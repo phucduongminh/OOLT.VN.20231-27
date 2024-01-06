@@ -17,13 +17,9 @@ public class Board {
   private Shape[] board = new Shape[12];
 
   public Board() {
-    //Khoi tao mac dinh cho Play with Bot
-    //Khoi tao Board(player1,player2) la cho 2 player 
-
-    //player1 = new Player1();
-    //playerAI = new AIplayer();
+	//use to copyBoard
 	player1 = new Player1();
-	player2 = new Player2("bot player");
+	player2 = new Player2("Bot player");
     board[0] = new Semicircle(0);
     board[6] = new Semicircle(6);
 
