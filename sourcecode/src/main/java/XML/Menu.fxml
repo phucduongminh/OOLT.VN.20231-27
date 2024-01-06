@@ -9,14 +9,14 @@
    <children>
       <ImageView fitWidth="1230.0" fitHeight="693.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Image1/MenuBackGround.png" />
+            <Image url="@../../../Image/MenuBackGround.png" />
          </image>
       </ImageView>
       <Button fx:id="button_start" layoutX="20.0" layoutY="180" mnemonicParsing="false" onAction="#switch_Start" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitWidth="410" fitHeight="231" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Image1/StartButton.png" />
+                  <Image url="@../../../Image/StartButton.png" />
                </image>
             </ImageView>
          </graphic>
@@ -25,7 +25,7 @@
          <graphic>
             <ImageView fitWidth="410" fitHeight="231" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Image1/StartWithBot.png" />
+                  <Image url="@../../../Image/StartWithBot.png" />
                </image>
             </ImageView>
          </graphic>
@@ -34,7 +34,7 @@
          <graphic>
             <ImageView fitWidth="205" fitHeight="115.5" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Image1/RulesButton.png" />
+                  <Image url="@../../../Image/RulesButton.png" />
                </image>
             </ImageView>
          </graphic>
@@ -43,7 +43,7 @@
          <graphic>
             <ImageView fitWidth="205" fitHeight="115.5" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Image1/QuitButton.png" />
+                  <Image url="@../../../Image/QuitButton.png" />
                </image>
             </ImageView>
          </graphic>

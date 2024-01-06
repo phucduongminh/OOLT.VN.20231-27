@@ -5,12 +5,10 @@ import Board.Board;
 import Gem.*;
 import Move.Move;
 import Player.*;
-;
 
 public class Console {
 	static Player playingPlayer;
 	static Board board;
-	static Scanner keyboard = new Scanner(System.in);
 
 	public static void aTurn(Board board, Player playingPlayer) { // thực hiện lượt chơi bao gồm: chọn ô, chọn hướng, chơi
 		if (playingPlayer instanceof Player1) {
@@ -155,7 +153,9 @@ public class Console {
 				board = new Board(player1,aiPlayer);
 				break;
 			}
-			if (choice == 3) break;
+			if (choice == 3) {
+				sc.close();
+				break;}
 		}
 	
 
@@ -165,7 +165,7 @@ public class Console {
 		// Start game
 		while (stopGame(board) == false) {
 			
-			if (checkNeedRefill(board, playingPlayer) == true) {
+			if (checkNeedRefill(board, playingPlayer)) {
 				refillGems(board, playingPlayer);
 				System.out.println("begin");
 				board.print();

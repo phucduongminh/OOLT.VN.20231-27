@@ -9,14 +9,14 @@
    <children>
       <ImageView fitWidth="1230.0" fitHeight="693.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Image1/Rules.png" />
+            <Image url="@../../../Image/Rules.png" />
          </image>
       </ImageView>
       <Button fx:id="quit_button" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#Back_menu" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="92.4" fitWidth="164" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Image1/TurnLeft.png" />
+                  <Image url="@../../../Image/TurnLeft.png" />
                </image>
             </ImageView>
          </graphic>
