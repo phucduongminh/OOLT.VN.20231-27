@@ -52,21 +52,18 @@ public class BotPlayer extends Player2 {
 
         for (Move move : getValidMoves(board)) {
             Board tempBoard = new Board();
+            tempBoard.copyBoard(board);
             if (tempBoard.getPlayer1() == null) System.out.println("null");
             if (board.getPlayer1() == null) System.out.println("null");
-            System.out.println(tempBoard.getPlayer1().getTotalPoint());
-
-            tempBoard.copyBoard(board);
-            System.out.println(move.position + " " + move.direction);
-            tempBoard.turn(this,move.position,move.direction);
-            tempBoard.print();
-            board.print();            
+    
+            tempBoard.turn(this,move.position,move.direction,true);
+                      
             
             int score = minimax(tempBoard, this.depth, false);
             if (score > bestScore) {
                 bestScore = score;
                 bestMove = move;
-                System.out.println(score);
+                
             }
         }
 
@@ -83,7 +80,7 @@ public class BotPlayer extends Player2 {
             for (Move move : getValidMoves(board)) {
                 Board tempBoard = new Board();
                 tempBoard.copyBoard(board);
-                tempBoard.turn(this,move.position,move.direction);
+                tempBoard.turn(this,move.position,move.direction,true);
                 int eval = minimax(tempBoard, depth - 1, false);
                 maxEval = Math.max(maxEval, eval);
             }
@@ -93,7 +90,7 @@ public class BotPlayer extends Player2 {
             for (Move move : getValidMovesPlayer(board)) {
                 Board tempBoard = new Board();
                 tempBoard.copyBoard(board);
-                tempBoard.turn(board.getPlayer1(),move.position,move.direction);
+                tempBoard.turn(board.getPlayer1(),move.position,move.direction,true);
                 int eval = minimax(tempBoard, depth - 1, true);
                 minEval = Math.min(minEval, eval);
             }

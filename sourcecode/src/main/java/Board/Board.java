@@ -10,7 +10,7 @@ import Shape.Square;
 import Shape.Shape;
 
 public class Board {
-  private Player1 player1;
+  	private Player1 player1;
 	private Player2 player2 ;
 
   // Mang kich thuoc 12 chua cac hinh trong bang tro choi
@@ -22,6 +22,8 @@ public class Board {
 
     //player1 = new Player1();
     //playerAI = new AIplayer();
+	player1 = new Player1();
+	player2 = new Player2("bot player");
     board[0] = new Semicircle(0);
     board[6] = new Semicircle(6);
 
@@ -119,6 +121,16 @@ public class Board {
 		if (source == null) {
 			throw new IllegalArgumentException("Source board cannot be null");
 		}
+		if (this.player1 != null && source.getPlayer1() != null) {
+			this.player1.copyPlayer(source.getPlayer1());
+		} else {
+			throw new RuntimeException("Player1 is null");
+		}
+		if (this.player2 != null && source.getPlayer2() != null) {
+			this.player2.copyPlayer(source.getPlayer2());
+		} else {
+			throw new RuntimeException("Player2 is null");
+		}
 		if (this.board != null) {
 			
 			if (source.board != null) {
@@ -131,16 +143,7 @@ public class Board {
 			}
 		}
 		
-		if (this.player1 != null && source.getPlayer1() != null) {
-			this.player1.copyPlayer(source.getPlayer1());
-		} else {
-			throw new RuntimeException("Player1 is null");
-		}
-		if (this.player2 != null && source.getPlayer2() != null) {
-			this.player2.copyPlayer(source.getPlayer2());
-		} else {
-			throw new RuntimeException("Player2 is null");
-		}
+		
 	}
 
   //position is 0-11, but except 0 and 6 is SemiCircle
@@ -157,17 +160,17 @@ public class Board {
 		}
 	}
 
-  public void turn(Player playingPlayer, int position, int direction) { // thực hiện một lượt chơi khi đã có hướng và ô
-		int type =0;
+  public void turn(Player playingPlayer, int position, int direction,boolean isBot) { // thực hiện một lượt chơi khi đã có hướng và ô
+		int type = 1;
 		if (playingPlayer instanceof Player1) {
       //??co bo buoc nay duoc ko?
 			playingPlayer = (Player1) playingPlayer;
 
 		} else if (playingPlayer instanceof Player2) {
 			playingPlayer = (Player2) playingPlayer;
-			type =1;
+			type =2;
 		} else {
-			type = 2;
+			type =2;
 		}
 		
 		while(true) {
@@ -179,7 +182,9 @@ public class Board {
 				while(true) {
 					if(this.getShape(curPosition + direction).getPoint() != 0 && !this.getShape(curPosition + direction).toString().equals("Semicircle")) {
 						// Next square != halfcircle && point != 0 => continue
-						System.out.println();
+						if (!isBot){
+							System.out.println();
+						}
 						int nextPosition = curPosition + direction;
 						phasePoint = this.getShape(nextPosition).getPoint();
 						pickAndDrop(this, playingPlayer, nextPosition, direction);
@@ -188,8 +193,10 @@ public class Board {
 					
 					else if(this.getShape(curPosition + direction).toString().equals("Semicircle")) {
 						// next square is a halfcircle and point != 0 => stop turn
+						if (!isBot){
+							System.out.println("Stop because the next square is the half circle");
+						}
 						
-						System.out.println("Stop because the next square is the half circle");
 						break;
 					}
 					
@@ -197,10 +204,10 @@ public class Board {
 					else if (this.getShape(curPosition + direction).getPoint() == 0 && this.getShape(curPosition + 2*direction).getPoint() != 0 ) {
 						// next square has 0 gems
 						while (this.getShape(curPosition + direction).getPoint() == 0 && this.getShape(curPosition + 2*direction).getPoint() != 0 && !this.getShape(curPosition + direction).toString().equals("Semicircle")) {
-							if (type ==1){
+							if (!isBot){
 							System.out.println("Player " + playingPlayer.getName() + " take " + this.getShape(curPosition + 2*direction).getPoint() + " gems");
 							}
-							if(type==0){
+							if(type==1){
 								this.player1.plusPoint(this.getShape(curPosition + 2*direction).getPoint());
 							}else{
 								this.player2.plusPoint(this.getShape(curPosition + 2*direction).getPoint());
@@ -214,7 +221,9 @@ public class Board {
 						break;
 					}
 					else {
-						System.out.println("You get 0 gem!");
+						if (!isBot){
+							System.out.println("You get 0 gem!");
+						}
 						break;
 					}
 					
