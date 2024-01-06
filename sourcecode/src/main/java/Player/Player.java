@@ -43,5 +43,12 @@ public class Player {
     public void setPointInHand(int pointInHand) {
         this.pointInHand = pointInHand;
     }
-
+    public void copyPlayer(Player source){
+		if (source == null) {
+			throw new IllegalArgumentException("Source player cannot be null");
+		}
+		this.totalPoint = source.totalPoint;
+		this.name = source.name;
+		this.pointInHand = source.pointInHand;
+	}
 }

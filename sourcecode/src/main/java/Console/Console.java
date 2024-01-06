@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 import Board.Board;
 import Gem.*;
-import Player.Player;
-import Player.Player1;
-import Player.Player2;
+import Move.Move;
+import Player.*;
+;
 
 public class Console {
 	static Player playingPlayer;
@@ -14,36 +14,51 @@ public class Console {
 
 	public static void aTurn(Board board, Player playingPlayer) { // thực hiện lượt chơi bao gồm: chọn ô, chọn hướng, chơi
 		if (playingPlayer instanceof Player1) {
-		   playingPlayer = (Player1) playingPlayer;
-	   } else if (playingPlayer instanceof Player2) {
-		   playingPlayer = (Player2) playingPlayer;
-	   }
-	  
-		// Choose square
-	   System.out.println("Please choose a square in " + playingPlayer.getRange());
-	   int chosenSquare = keyboard.nextInt();
-	   while (playingPlayer.getRange().contains(chosenSquare) == false || board.getShape(chosenSquare).getPoint() == 0) {
-		   System.out.println("You cannot choose this square!");
-		   System.out.println("Please choose another square in " + playingPlayer.getRange());
-		   chosenSquare = keyboard.nextInt();
-	   }
-	   
-	   // choose direction
-	   System.out.println("Please choose direction:");
-	   System.out.println("1: counter clockwise");
-	   System.out.println("-1: clockwise");
-	   int chosenDirection = keyboard.nextInt();
-	   while (chosenDirection != 1 && chosenDirection != -1) {
-		   System.out.println("This number is not available!");
-		   System.out.println("Please choose direction:");
-		   System.out.println("1: counter clockwise");
-		   System.out.println("-1: clockwise");
-		   chosenDirection = keyboard.nextInt();
-	   }
-	   
-	   board.turn( playingPlayer, chosenSquare, chosenDirection);
-	   board.print();
-	   
+			playingPlayer = (Player1) playingPlayer;
+		} else if (playingPlayer instanceof Player2) {
+			playingPlayer = (Player2) playingPlayer;		
+		} else{		
+			playingPlayer = (BotPlayer)playingPlayer;
+
+		}
+		if (playingPlayer instanceof BotPlayer){
+			BotPlayer  botPlayer= (BotPlayer) playingPlayer;
+			if (board.getPlayer1() == null) System.out.println("null");
+            
+			Move chosenSquare = botPlayer.chooseSquare(board);
+			System.out.println(chosenSquare.position + " "+ chosenSquare.direction );
+
+			board.turn(botPlayer, chosenSquare.position,chosenSquare.direction,false);
+			
+		}else{
+ 		// Choose square
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("Please choose a square in " + playingPlayer.getRange());
+		int chosenSquare = keyboard.nextInt();
+		while (playingPlayer.getRange().contains(chosenSquare) == false || board.getShape(chosenSquare).getPoint() == 0) {
+			System.out.println("You cannot choose this square!");
+			System.out.println("Please choose another square in " + playingPlayer.getRange());
+			chosenSquare = keyboard.nextInt();
+		}
+		
+		// choose direction
+		System.out.println("Please choose direction:");
+		System.out.println("1: counter clockwise");
+		System.out.println("-1: clockwise");
+		int chosenDirection = keyboard.nextInt();
+		while (chosenDirection != 1 && chosenDirection != -1) {
+			System.out.println("This number is not available!");
+			System.out.println("Please choose direction:");
+			System.out.println("1: counter clockwise");
+			System.out.println("-1: clockwise");
+			chosenDirection = keyboard.nextInt();
+		}
+		
+		board.turn( playingPlayer, chosenSquare, chosenDirection,false);
+		
+		}
+		board.print();
+		
    }
 
 	public static boolean stopTurn(Board board,Player playingPlayer, int curPosition , int direction) { // done
@@ -118,33 +133,58 @@ public class Console {
 	}
 
 	public static void main(String[] args) {
+		int choice;
+		Scanner sc = new Scanner(System.in);
 		Player1 player1 = new Player1();
 		Player2 player2 = new Player2();
+		BotPlayer aiPlayer = new BotPlayer("Bot Player", 4);
 		Board board = new Board(player1,player2);
+		
+		while(true){
+			System.out.println("1. Player vs Player");
+			System.out.println("2. Player vs AI");
+			System.out.println("3. Exit");
+			System.out.println("Enter your choice: ");
+			choice = sc.nextInt();
+			if (choice == 1) {
+				
+				break;
+			}
+				
+			if (choice == 2) {
+				board = new Board(player1,aiPlayer);
+				break;
+			}
+			if (choice == 3) break;
+		}
+		
+	
 
 		playingPlayer = player1;
 		board.print();
 	
 		// Start game
 		while (stopGame(board) == false) {
-			if (checkNeedRefill(board, playingPlayer)) {
+			
+			if (checkNeedRefill(board, playingPlayer) == true) {
+				refillGems(board, playingPlayer);
 				System.out.println("begin");
 				board.print();
 				System.out.println("end");
-				refillGems(board, playingPlayer);
+				
 				
 			}
+			if (board.getPlayer1() == null) System.out.println("null");
 			aTurn(board, playingPlayer);
 			
-			board.print();
-			System.out.println("Player " + player1.getName() + " has " + player1.getTotalPoint() + " gems");
-			System.out.println("Player " + player2.getName() + " has " + player2.getTotalPoint() + " gems");
+			
+			System.out.println("Player " + board.getPlayer1().getName() + " has " + player1.getTotalPoint() + " gems");
+			System.out.println("Player " + board.getPlayer2().getName() + " has " + aiPlayer.getTotalPoint() + " gems");
 			System.out.println("=======================================================");
-			takeTurn(player1, player2);
+			takeTurn(board.getPlayer1(),board.getPlayer2());
 			
 		}
 		
-		keyboard.close();
 		gameResult(player1, player2);
 		
 	}

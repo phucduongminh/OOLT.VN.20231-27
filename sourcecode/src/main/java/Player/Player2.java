@@ -7,7 +7,9 @@ public class Player2 extends Player{
     public Player2(){
         super("Player 2");
     }
-
+    public Player2(String name){
+        super(name);
+    }
     @Override
     public List <Integer> getRange(){
         return  range;
