@@ -157,7 +157,6 @@ public class Console {
 			}
 			if (choice == 3) break;
 		}
-		
 	
 
 		playingPlayer = player1;
