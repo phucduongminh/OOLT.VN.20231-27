@@ -58,8 +58,10 @@ public class EndController {
 		}
     }
     
-    public void gameResult() {
+    public void initialize() {
     	Player wonplayer;
+		player1.plusPoint(10);
+		player2.plusPoint(20);
     	if (player1.getTotalPoint() > player2.getTotalPoint()) {
     		wonplayer = player1;
     	} else {

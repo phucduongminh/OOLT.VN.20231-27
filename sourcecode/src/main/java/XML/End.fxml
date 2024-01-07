@@ -32,7 +32,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="wonPlayer" layoutX="500" layoutY="20" text="PLayer" textFill="#470e04">
+      <Label fx:id="wonPlayer" layoutX="550" layoutY="20" textFill="#470e04" text="">
          <font>
             <Font name="Castellar" size="40.0" />
          </font>

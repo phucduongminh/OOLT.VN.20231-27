@@ -38,7 +38,7 @@ public class End extends Application {
 
 	public static void main(String[] args) {
 		player1 = new Player1();
-		player2 = new Player2("bbb");
+		player2 = new Player2();
 		board = new Board();
 		playingPlayer = player1;
 		
