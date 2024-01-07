@@ -39,21 +39,22 @@ public class EndController {
     @FXML
     void btnRestart(ActionEvent event) {
 		try {
-			final String FILE_PATH = "../XML/Game.fxml";
+			final String FILE_PATH = "../XML/Menu.fxml";
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FILE_PATH));
 			player1 = new Player1();
-			player2 = new Player2(player2.getName());
+			player2 = new Player2();
 			playingPlayer = player1;
-			GameController gameController = new GameController(new Board(), player1, player2, playingPlayer);
-			fxmlLoader.setController(gameController);
+			MenuController menuController = new MenuController(new Board(), player1, player2, playingPlayer);
+			fxmlLoader.setController(menuController);
 			Parent root;
 			root = fxmlLoader.load();
-			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    		
-    		stage.setScene(new Scene(root));
+			Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			
+			stage.setScene(new Scene(root));
     		stage.setTitle(null);
     		stage.show();
-		} catch (IOException e) {
+    		
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
     }
