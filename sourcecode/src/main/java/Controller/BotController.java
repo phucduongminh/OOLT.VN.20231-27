@@ -54,10 +54,10 @@ public class BotController{
     private Label pnt0;
 
     @FXML
-    private Pane sqa1;
+    private Pane sq1;
 
     @FXML
-    private Label pnta1;
+    private Label pnt1;
 
     @FXML
     private Pane sq2;
@@ -143,13 +143,10 @@ public class BotController{
     void chooseSquClicked(MouseEvent event) {
 		curPosition = Integer.parseInt(((Node) event.getSource()).getId().substring(2));
     	
-    	if (playingPlayer == player1) {
     		if (player1.getRange().contains(curPosition) && board.getShape(curPosition).getPoint() != 0) {
     			leftDir.setVisible(true);
     			rightDir.setVisible(true);
     		} 
-    		
-    	}
     }
     
     
@@ -225,7 +222,7 @@ public class BotController{
 			Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("Notification!");
     	alert.setHeaderText(null);
-    	String content = "Bot done.Now you!";
+    	String content = "Bot done. Now you!";
 		alert.setContentText(content);
 		alert.showAndWait();
 		turn1.setVisible(true);
@@ -268,7 +265,7 @@ public class BotController{
 				curPosition = position + direction*phasePoint;
 				while(true) {
 					if(board.getShape(curPosition + direction).getPoint() != 0 && !board.getShape(curPosition + direction).toString().equals("Semicircle")) {
-						// Next square != halfcircle && point != 0 => continue
+						// Next square != Semicircle && point != 0 => continue
 					
 						int nextPosition = curPosition + direction;
 						phasePoint = board.getShape(nextPosition).getPoint();
@@ -277,8 +274,8 @@ public class BotController{
 					}
 					
 					else if(board.getShape(curPosition + direction).toString().equals("Semicircle")) {
-						// next square is a halfcircle and point != 0 => stop turn
-						content += "Stop because the next square is the half circle" + "\n";
+						// next square is a Semicircle and point != 0 => stop turn
+						content += "Stop because the next square is the Semicircle" + "\n";
 				
 						break;
 					}
@@ -358,7 +355,7 @@ public class BotController{
     	score1.setText(Integer.toString(player1.getTotalPoint()));
     	score2.setText(Integer.toString(player2.getTotalPoint()));
     	pnt0.setText(Integer.toString(board.getShape(0).getPoint()));
-    	pnta1.setText(Integer.toString(board.getShape(1).getPoint()));
+    	pnt1.setText(Integer.toString(board.getShape(1).getPoint()));
     	pnt2.setText(Integer.toString(board.getShape(2).getPoint()));
     	pnt3.setText(Integer.toString(board.getShape(3).getPoint()));
     	pnt4.setText(Integer.toString(board.getShape(4).getPoint()));

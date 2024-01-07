@@ -72,7 +72,7 @@ public class MenuController {
 			final String FILE_PATH = "../XML/BotGame.fxml";
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FILE_PATH));
 			player1 = new Player1();
-			botPlayer = new BotPlayer("Bot", 4);
+			botPlayer = new BotPlayer("Bot", 3);
 			board = new Board(player1,botPlayer);
 			playingPlayer = player1;
 			BotController gameController = new BotController(board, player1, botPlayer, playingPlayer);

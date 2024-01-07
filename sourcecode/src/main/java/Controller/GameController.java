@@ -241,8 +241,7 @@ public class GameController{
     
     
     public static void aPhase(Board board,Player playingPlayer, int position, int direction) {
-		// 
-    	SmallGem gem = new SmallGem();
+		SmallGem gem = new SmallGem();
 		playingPlayer.setPointInHand(board.getShape(position).getPoint());
 		board.getShape(position).removeGem();
 		int curPosition = position;
@@ -250,7 +249,6 @@ public class GameController{
 			curPosition += direction;
 			board.getShape(curPosition).addGem(gem);
 			playingPlayer.setPointInHand(playingPlayer.getPointInHand() - 1);
-			//playingPlayer.pointInHand -= 1;
 		}
 	}
     
@@ -273,8 +271,8 @@ public class GameController{
 				aPhase(board, playingPlayer, position, direction);
 				curPosition = position + direction*phasePoint;
 				while(true) {
-					if(board.getShape(curPosition + direction).getPoint() != 0 && !board.getShape(curPosition + direction).getClass().getSimpleName().equals("HalfCircle")) {
-						// Next square != halfcircle && point != 0 => continue
+					if(board.getShape(curPosition + direction).getPoint() != 0 && !board.getShape(curPosition + direction).toString().equals("Semicircle")) {
+						// Next square != Semicircle && point != 0 => continue
 					
 						int nextPosition = curPosition + direction;
 						phasePoint = board.getShape(nextPosition).getPoint();
@@ -282,9 +280,9 @@ public class GameController{
 						curPosition = nextPosition + direction*phasePoint;
 					}
 					
-					else if(board.getShape(curPosition + direction).getClass().getSimpleName().equals("HalfCircle")) {
-						// next square is a halfcircle and point != 0 => stop turn
-						content += "Stop because the next square is the half circle" + "\n";
+					else if(board.getShape(curPosition + direction).toString().equals("Semicircle")) {
+						// next square is a Semicircle and point != 0 => stop turn
+						content += "Stop because the next square is the Semicircle" + "\n";
 				
 						break;
 					}
@@ -292,7 +290,7 @@ public class GameController{
 					
 					else if (board.getShape(curPosition + direction).getPoint() == 0 && board.getShape(curPosition + 2*direction).getPoint() != 0 ) {
 						// next square has 0 gems
-						while (board.getShape(curPosition + direction).getPoint() == 0 && board.getShape(curPosition + 2*direction).getPoint() != 0 && !board.getShape(curPosition + direction).getClass().getSimpleName().equals("HalfCircle")) {
+						while (board.getShape(curPosition + direction).getPoint() == 0 && board.getShape(curPosition + 2*direction).getPoint() != 0 && !board.getShape(curPosition + direction).toString().equals("Semicircle")) {
 							content += "Player " + playingPlayer.getName() + " take " + board.getShape(curPosition + 2*direction).getPoint() + " gems" + "\n";
 			
 							playingPlayer.plusPoint(board.getShape(curPosition + 2*direction).getPoint());

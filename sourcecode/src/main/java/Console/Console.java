@@ -135,7 +135,7 @@ public class Console {
 		Scanner sc = new Scanner(System.in);
 		Player1 player1 = new Player1();
 		Player2 player2 = new Player2();
-		BotPlayer aiPlayer = new BotPlayer("Bot Player", 4);
+		BotPlayer aiPlayer = new BotPlayer("Bot Player", 3);
 		Board board = new Board(player1,player2);
 		
 		while(true){

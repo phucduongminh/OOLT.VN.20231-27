@@ -42,7 +42,7 @@ public class BotGame extends Application {
 
 	public static void main(String[] args) {
 		player1 = new Player1();
-		player2 = new BotPlayer("Bot", 4);
+		player2 = new BotPlayer("Bot", 3);
 		board = new Board(player1,player2);
 		playingPlayer = player1;
 		

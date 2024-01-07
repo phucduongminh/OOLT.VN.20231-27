@@ -41,8 +41,5 @@ public class Shape {
 			shape.remove(0);
 		}
 	}
-   
-    
-	
 }
 

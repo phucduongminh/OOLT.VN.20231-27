@@ -45,7 +45,7 @@
                   <Image url="@../../../Image/BigGems.png" />
                </image>
             </ImageView>
-            <Label fx:id="pnt1" layoutX="41.0" layoutY="68.0" prefHeight="24.0" prefWidth="5.0" text="0">
+            <Label fx:id="pnt1" layoutX="41.0" layoutY="68.0" text="0">
                <font>
                   <Font name="Leelawadee Bold" size="20.0" />
                </font></Label>

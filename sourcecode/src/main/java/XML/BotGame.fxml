@@ -38,14 +38,14 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane fx:id="sqa1" layoutX="340" layoutY="360" onMouseClicked="#chooseSquClicked" prefHeight="94.0" prefWidth="94.0">
+      <Pane fx:id="sq1" layoutX="340" layoutY="360" onMouseClicked="#chooseSquClicked" prefHeight="94.0" prefWidth="94.0">
          <children>
             <ImageView fx:id="imgGem" fitHeight="100.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Image/BigGems.png" />
                </image>
             </ImageView>
-            <Label fx:id="pnta1" layoutX="41.0" layoutY="68.0" prefHeight="24.0" prefWidth="5.0" text="0">
+            <Label fx:id="pnt1" layoutX="41.0" layoutY="68.0" text="0">
                <font>
                   <Font name="Leelawadee Bold" size="20.0" />
                </font></Label>

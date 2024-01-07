@@ -177,7 +177,7 @@ public class Board {
 				curPosition = position + direction*phasePoint;
 				while(true) {
 					if(this.getShape(curPosition + direction).getPoint() != 0 && !this.getShape(curPosition + direction).toString().equals("Semicircle")) {
-						// Next square != halfcircle && point != 0 => continue
+						// Next square != Semicircle && point != 0 => continue
 						if (!isBot){
 							System.out.println();
 						}
@@ -188,9 +188,9 @@ public class Board {
 					}
 					
 					else if(this.getShape(curPosition + direction).toString().equals("Semicircle")) {
-						// next square is a halfcircle and point != 0 => stop turn
+						// next square is a Semicircle and point != 0 => stop turn
 						if (!isBot){
-							System.out.println("Stop because the next square is the half circle");
+							System.out.println("Stop because the next square is the Semicircle");
 						}
 						
 						break;
