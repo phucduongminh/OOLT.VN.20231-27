@@ -8,8 +8,8 @@ import Player.Player;
 public class Move {
     private Board board;
     private Player playingPlayer;
-    public int position;
-    public int direction;
+    private int position;
+    private int direction;
     public int eval=0;
 	public Move(Board board, int position, int direction) {
         this.board = board;
@@ -25,5 +25,12 @@ public class Move {
         this.direction = direction;
 
     }
-    
+
+    public int getPosition() {
+        return position;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
 }

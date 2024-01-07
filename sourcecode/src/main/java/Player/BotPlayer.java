@@ -10,7 +10,6 @@ import Move.Move;
 
 public class BotPlayer extends Player2 {
     private int depth;
-    private List<Integer> range = Arrays.asList(new Integer[] { 7, 8, 9, 10, 11 });
     public BotPlayer(String name, int depth) {
         super(name);
         this.depth = depth;
@@ -56,7 +55,7 @@ public class BotPlayer extends Player2 {
             if (tempBoard.getPlayer1() == null) System.out.println("null");
             if (board.getPlayer1() == null) System.out.println("null");
     
-            tempBoard.turn(this,move.position,move.direction,true);
+            tempBoard.turn(this,move.getPosition(),move.getDirection(),true);
                       
             
             int score = minimax(tempBoard, this.depth, false);
@@ -80,7 +79,7 @@ public class BotPlayer extends Player2 {
             for (Move move : getValidMoves(board)) {
                 Board tempBoard = new Board();
                 tempBoard.copyBoard(board);
-                tempBoard.turn(this,move.position,move.direction,true);
+                tempBoard.turn(this,move.getPosition(),move.getDirection(),true);
                 int eval = minimax(tempBoard, depth - 1, false);
                 maxEval = Math.max(maxEval, eval);
             }
@@ -90,7 +89,7 @@ public class BotPlayer extends Player2 {
             for (Move move : getValidMovesPlayer(board)) {
                 Board tempBoard = new Board();
                 tempBoard.copyBoard(board);
-                tempBoard.turn(board.getPlayer1(),move.position,move.direction,true);
+                tempBoard.turn(board.getPlayer1(),move.getPosition(),move.getDirection(),true);
                 int eval = minimax(tempBoard, depth - 1, true);
                 minEval = Math.min(minEval, eval);
             }

@@ -26,9 +26,9 @@ public class Console {
 			if (board.getPlayer1() == null) System.out.println("null");
             
 			Move chosenSquare = botPlayer.chooseSquare(board);
-			System.out.println(chosenSquare.position + " "+ chosenSquare.direction );
+			System.out.println(chosenSquare.getPosition() + " "+ chosenSquare.getDirection() );
 
-			board.turn(botPlayer, chosenSquare.position,chosenSquare.direction,false);
+			board.turn(botPlayer, chosenSquare.getPosition(),chosenSquare.getDirection(),false);
 			
 		}else{
  		// Choose square
