@@ -195,7 +195,7 @@ public class BotController{
 				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	    		
 	    		stage.setScene(new Scene(root));
-	    		stage.setTitle("Cart");
+	    		stage.setTitle("End");
 	    		stage.show();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -231,7 +231,7 @@ public class BotController{
     }
     
     
-    public static void aPhase(Board board,Player playingPlayer, int position, int direction) {
+    public static void pickAndDrop(Board board,Player playingPlayer, int position, int direction) {
 		// 
     	SmallGem gem = new SmallGem();
 		playingPlayer.setPointInHand(board.getShape(position).getPoint());
@@ -261,7 +261,7 @@ public class BotController{
 			if(board.getShape(position).getPoint() > 0) {
 				int curPosition = position;
 				int phasePoint = board.getShape(position).getPoint();	 // number of gems in chosen square
-				aPhase(board, playingPlayer, position, direction);
+				pickAndDrop(board, playingPlayer, position, direction);
 				curPosition = position + direction*phasePoint;
 				while(true) {
 					if(board.getShape(curPosition + direction).getPoint() != 0 && !board.getShape(curPosition + direction).toString().equals("Semicircle")) {
@@ -269,7 +269,7 @@ public class BotController{
 					
 						int nextPosition = curPosition + direction;
 						phasePoint = board.getShape(nextPosition).getPoint();
-						aPhase(board, playingPlayer, nextPosition, direction);
+						pickAndDrop(board, playingPlayer, nextPosition, direction);
 						curPosition = nextPosition + direction*phasePoint;
 					}
 					

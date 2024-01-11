@@ -6,7 +6,7 @@ import java.util.List;
 public class Player {
     private int totalPoint;
     private String name;
-    private int direction; // 1: counterclockwise, -1: clockwise
+    private int direction; // 1: anticlockwise, -1: clockwise
     private static List<Integer> range = new ArrayList<Integer>();
     private int pointInHand;
 

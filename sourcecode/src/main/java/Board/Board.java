@@ -143,7 +143,7 @@ public class Board {
 	}
 
   //position is 0-11, but except 0 and 6 is SemiCircle
-	//direction is -1 for anticlockwise, 1 is for folling clockwise
+	//direction is 1 for anticlockwise, -1 is for folling clockwise
 	public static void pickAndDrop(Board board,Player playingPlayer, int position, int direction) {
 		SmallGem gem = new SmallGem();
 		playingPlayer.setPointInHand(board.getShape(position).getPoint());
